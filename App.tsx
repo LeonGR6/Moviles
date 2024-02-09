@@ -1,16 +1,24 @@
-import { config } from '@gluestack-ui/config';
-import { Box, GluestackUIProvider, Text, Image, Link, VStack, Heading } from '@gluestack-ui/themed';
-import { ScrollView } from 'react-native';
-import Gradient from './assets/Icons/Gradient';
-import DocumentData from './assets/Icons/DocumentData';
-import LightBulbPerson from './assets/Icons/LightbulbPerson';
-import Rocket from './assets/Icons/Rocket';
-import Logo from './assets/Icons/Logo';
+import {  GluestackUIProvider } from '@gluestack-ui/themed';
+import { config } from './config/gluestack-ui.config';
+import Navigation from './navigation';
+import { useFonts } from 'expo-font';
+import { SubstanceProvider } from './context/categoryProvider.js';
+import Login from './views/login';
+import Register from './views/register';
 
-export default function App() {
+
+  export default function App() {
+    const [fontsLoaded] = useFonts({
+      'Montserrat-Bold': require('./assets/fonts/Montserrat-Bold.ttf'),
+      'Montserrat-Medium': require('./assets/fonts/Montserrat-Medium.ttf'),
+      'Montserrat-Regular': require('./assets/fonts/Montserrat-Regular.ttf'),
+      'Montserrat-SemiBold': require('./assets/fonts/Montserrat-SemiBold.ttf'),
+    });
   return (
-    <GluestackUIProvider config={config}>
+    <GluestackUIProvider config={config} >
+      <SubstanceProvider>
       <Home />
+      </SubstanceProvider>
     </GluestackUIProvider>
   );
 }
@@ -23,6 +31,6 @@ const Home = () => {
 
 const Container = () => {
   return (
-   <Card/>
-  );
+    <Navigation/>
+    );
 };
