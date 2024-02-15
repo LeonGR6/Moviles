@@ -1,15 +1,20 @@
-import { Box, Text, Image, Link, VStack, Heading } from '@gluestack-ui/themed';
-import ProductCard from '../components/product_card';
 import Index from '.';
 import useCategory from '../hooks/useCategory';
 import { useIsFocused } from '@react-navigation/native';
 import { ScrollView } from 'react-native-gesture-handler';
+import { useEffect } from 'react';
 
 function PreWorkout() {
-    const { handleClickCategory } = useCategory();
-
+    const { actualCategory, handleClickCategory } = useCategory();
     const isFocused = useIsFocused();
-    { isFocused ? handleClickCategory(3) : null }
+  
+    useEffect(() => {
+      if (isFocused) {
+        handleClickCategory(3); 
+      }
+    }, [isFocused, handleClickCategory]);
+
+    console.log(actualCategory);
 
     return (
         <ScrollView>

@@ -5,7 +5,7 @@ const Auth_layout = () => {
         <>
             <Box
                 w='100%'
-                h={250}
+                h={270}
             >
                 <Image
                     h='100%'

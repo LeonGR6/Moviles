@@ -1,16 +1,20 @@
-import { Box, Text, Image, Link, VStack, Heading } from '@gluestack-ui/themed';
-import ProductCard from '../components/product_card';
 import Index from '.';
 import { ScrollView } from 'react-native-gesture-handler';
-import { useFocusEffect, useIsFocused } from '@react-navigation/native';
+import { useIsFocused } from '@react-navigation/native';
 import useCategory from '../hooks/useCategory';
-import React from 'react';
+import React, { useEffect } from 'react';
 
 function Protein (){
-    const {handleClickCategory} = useCategory();
-
+    const { actualCategory, handleClickCategory } = useCategory();
     const isFocused = useIsFocused();
-    {isFocused ? handleClickCategory(1) : null}
+  
+    useEffect(() => {
+      if (isFocused) {
+        handleClickCategory(1); 
+      }
+    }, [isFocused, handleClickCategory]);
+
+    console.log(actualCategory);
 
     return (
         <ScrollView>

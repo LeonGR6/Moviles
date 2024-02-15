@@ -1,7 +1,15 @@
 import { Box, Image, Text, VStack, Button, ButtonText } from '@gluestack-ui/themed'
 import React from 'react'
+import { useAuthentication } from '../auth/hooks/useAuthentication';
+import { signOut } from '../auth/actions';
 
-export default function UserStack() {
+export default function LoggedUser() {
+
+  const { signOut } = useAuthentication();
+
+  const onHandleSignOut = () => {
+      signOut();
+  }
   return (
     <>
       <Box
@@ -38,7 +46,7 @@ export default function UserStack() {
           alignItems='center'
         >
           <Text $dark-color="$textLight200" size='lg' mt={22} style={{ textAlign: 'center' }}>
-            You are not auhtenthicated, please press the button.
+            Hi again $user!
           </Text>
           <Button
             mt={50}
@@ -48,7 +56,19 @@ export default function UserStack() {
             w='fit-content'
             variant="solid"
             isDisabled={false}>
-            <ButtonText>Authenthicate</ButtonText>
+            <ButtonText>Edit information</ButtonText>
+          </Button>
+          <Button
+            mt={50}
+            bg="$yellow500"
+            $active-bg="$yellow600"
+            size="sm"
+            w='fit-content'
+            variant="solid"
+            isDisabled={false}
+            onPress={onHandleSignOut}
+            >
+            <ButtonText>Logout</ButtonText>
           </Button>
         </VStack>
 

@@ -31,6 +31,10 @@ const SubstanceProvider = ({ children }) => {
         setActualCategory(category)
 
     }
+    
+    const clearCategory = () => {
+        setActualCategory([]);
+      };
 
 
 
@@ -41,6 +45,7 @@ const SubstanceProvider = ({ children }) => {
                 categories,
                 actualCategory,
                 handleClickCategory,
+                clearCategory,
             }}
 
 
