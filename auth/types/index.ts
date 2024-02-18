@@ -1,12 +1,14 @@
 import { ReactNode } from "react";
 
 export type AuthUser = {
-    accessToken: string,
+    accessToken: string;
+    user:string;
 };
 
 export type AuthState = {
     isAuthenticated: boolean;
     user: {
+        user:string;
         accessToken: string;
     } | null;
     signIn: ({ email, password }: { email: string, password: string }) => void;
@@ -31,7 +33,7 @@ export enum AuthActionTypes{
 export type AuthAction =
     | { type: AuthActionTypes.SIGN_IN; payload: AuthUser }
     | { type: AuthActionTypes.SIGN_UP; payload: AuthUser }
-    | { type: AuthActionTypes.SIGN_OUT }
+    | { type: AuthActionTypes.SIGN_OUT}
     | { type: AuthActionTypes.RESTORE_TOKEN; payload: AuthUser }
 
 export type RegisterFormValues = {

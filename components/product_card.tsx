@@ -1,16 +1,23 @@
 import { Text, Image, Button, Box, ButtonText, VStack, Heading } from '@gluestack-ui/themed';
 import React from 'react';
+import useCategory from '../hooks/useCategory';
 
-function ProductCard({ products }) {
-  const { name, image, price } = products
 
+function ProductCard({ product }: { product: any }) {
+  const { name, image, price } = product
+  const {handleClickModal, handleSetProduct} = useCategory();
+  
   return (
     <Box
-      width={130}
-      m="$5"
+      width={180}
+      m="$1"
+      mb={20}
+      rounded="$lg"
+      hardShadow="5"
+      bgColor='rgba(255, 255, 153, 0.40)'
+      p={15}
     >
       <Box
-        bg='$light300'
         maxWidth={400}
         h={150}
       >
@@ -18,7 +25,7 @@ function ProductCard({ products }) {
           mb="$1"
           h="$full"
           width="$full"
-          borderRadius="$md"
+          rounded="$md"
           source={image}
           alt="description of image"
         />
@@ -28,7 +35,7 @@ function ProductCard({ products }) {
         <Heading size="md" fontFamily="$heading" mb="$1">
           {name}
         </Heading>
-        <Text size='lg' fontFamily="$body">
+        <Text size='lg'  fontFamily="$body" >
           ${price}
         </Text>
         <Button
@@ -37,11 +44,12 @@ function ProductCard({ products }) {
           $active-bg="$yellow600"
           size="sm"
           variant="solid"
+          onPress={()=>{handleClickModal(); handleSetProduct(product);}}
           >
           <ButtonText size="sm">Add to cart</ButtonText>
         </Button>
+        
       </VStack >
-
 
     </Box>
   )

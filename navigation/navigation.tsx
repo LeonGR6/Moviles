@@ -1,16 +1,12 @@
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
 import { Image } from '@gluestack-ui/themed';
-
 import { NavigationContainer } from '@react-navigation/native';
-
-import Creatine from '../views/Creatine';
-import Protein from '../views/Protein';
-import PreWorkout from '../views/PreWorkout';
-
+import Creatine from '../components/Creatine';
+import Protein from '../components/Protein';
+import PreWorkout from '../components/PreWorkout';
 import LoggedUser from '../views/LoggedUser';
 import { useAuth } from '../auth/context';
 import { AuthStack } from './auth';
-import { useContext } from 'react';
 import useCategory from '../hooks/useCategory';
 
 const Tab = createBottomTabNavigator();
@@ -22,9 +18,11 @@ function LoggedTab() {
     return (
         <Tab.Navigator
             screenOptions={{
-                tabBarActiveTintColor: '#ca8a04'
+                tabBarActiveTintColor: '#ca8a04',
+                tabBarStyle: { backgroundColor: '#rgba(253, 224, 71, 0.20)' },
             }}
         >
+           
             <Tab.Screen
                 name='Protein'
                 options={{
@@ -33,7 +31,7 @@ function LoggedTab() {
                     tabBarIcon: ({ focused, size }) => (
                         <Image
                             source={require('../assets/Icons/Protein.png')}
-                            style={{ tintColor: focused ? '#ca8a04' : 'gray', width: size, height: size }}
+                            style={{ tintColor: focused ? '#ca8a04' : 'black', width: size, height: size }}
                             resizeMode="contain"
                             alt='desc'
 
@@ -53,7 +51,7 @@ function LoggedTab() {
                     tabBarIcon: ({ focused, size }) => (
                         <Image
                             source={require('../assets/Icons/Creatine.png')} // Ajusta la ruta al ícono local
-                            style={{ tintColor: focused ? '#ca8a04' : 'gray', width: size, height: size }}
+                            style={{ tintColor: focused ? '#ca8a04' : 'black', width: size, height: size }}
                             resizeMode="contain"
                             alt='desc'
                         />
@@ -72,7 +70,7 @@ function LoggedTab() {
                     tabBarIcon: ({ focused, size }) => (
                         <Image
                             source={require('../assets/Icons/PreWorkout.png')} // Ajusta la ruta al ícono local
-                            style={{ tintColor: focused ? '#ca8a04' : 'gray', width: size, height: size }}
+                            style={{ tintColor: focused ? '#ca8a04' : 'black', width: size, height: size }}
                             resizeMode="contain"
                             alt='desc'
                         />
@@ -89,7 +87,7 @@ function LoggedTab() {
                     tabBarIcon: ({ focused, size }) => (
                         <Image
                             source={require('../assets/Icons/User.png')} // Ajusta la ruta al ícono local
-                            style={{ tintColor: focused ? '#ca8a04' : 'gray', width: size, height: size }}
+                            style={{ tintColor: focused ? '#ca8a04' : 'black', width: size, height: size }}
                             resizeMode="contain"
                             alt='desc'
                         />
@@ -97,13 +95,14 @@ function LoggedTab() {
                 }}
                 component={LoggedUser}
             />
-
+    
         </Tab.Navigator>
     )
 }
 
 export const Navigation = () => {
     const { isAuthenticated, user } = useAuth();
+    console.log(isAuthenticated, user)
     return (
         <NavigationContainer>
             {isAuthenticated ? <LoggedTab /> : <AuthStack />}

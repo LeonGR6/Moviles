@@ -1,11 +1,10 @@
-import Index from '.';
-import { ScrollView } from 'react-native-gesture-handler';
+import Index from '../views';
 import { useIsFocused } from '@react-navigation/native';
 import useCategory from '../hooks/useCategory';
 import React, { useEffect } from 'react';
 
 function Protein (){
-    const { actualCategory, handleClickCategory } = useCategory();
+    const { handleClickCategory } = useCategory();
     const isFocused = useIsFocused();
   
     useEffect(() => {
@@ -14,12 +13,8 @@ function Protein (){
       }
     }, [isFocused, handleClickCategory]);
 
-    console.log(actualCategory);
-
     return (
-        <ScrollView>
         <Index/>
-        </ScrollView>
     )
 }
 export default Protein;
