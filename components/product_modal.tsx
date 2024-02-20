@@ -1,13 +1,24 @@
 import { Box, Button, ButtonText, CloseIcon, Heading, Icon, Modal, ModalBackdrop, ModalBody, ModalCloseButton, ModalContent, ModalFooter, ModalHeader, Image, Text, VStack } from '@gluestack-ui/themed'
-import React from 'react'
+import React, { useEffect } from 'react'
 import useCategory from '../hooks/useCategory'
 import { useState } from 'react';
 
-export default function Product_modal() {
-    const { modal, handleClickModal, product, handleAddOrder} = useCategory();
+export default function Product_modal({ }) {
+    const { handleClickModal, product, handleAddOrder, order, modal } = useCategory();
     const [quantity, setQuantity] = useState(1);
+    const [edit, setEdit] = useState(false);
+
+    useEffect(() => {
+        if (order.some((orderState: { id: any; }) => orderState.id === product.id)) {
+            const productEdit = order.filter((orderState: { id: any; }) => orderState.id === product.id)[0]
+
+            setQuantity(productEdit.quantity)
+            setEdit(true)
+        }
+    }, [order])
 
     return (
+
         <Modal
             isOpen={modal}
             onClose={() => {
@@ -101,11 +112,13 @@ export default function Product_modal() {
                         bg="$yellow500"
                         $active-bg="$yellow600"
                         onPress={() => {
+                            handleAddOrder({ ...product, quantity });
+                            setQuantity(1);
                             handleClickModal();
-                            handleAddOrder({...product, quantity});
+
                         }}
                     >
-                        <ButtonText>Add to cart</ButtonText>
+                        <ButtonText>{edit ? "Save changes" : "Add to cart"}</ButtonText>
                     </Button>
                 </ModalFooter>
             </ModalContent>

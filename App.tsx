@@ -19,21 +19,23 @@ export default function App() {
     'Montserrat-SemiBold': require('./assets/fonts/Montserrat-SemiBold.ttf'),
   });
   return (
-    <ErrorProvider>
-      <AuthProvider>
-        <GluestackUIProvider config={config} >
-          <SubstanceProvider>
+    <AuthProvider>
+      <SubstanceProvider>
+        <ErrorProvider>
+          <GluestackUIProvider config={config} >
             <Home />
-          </SubstanceProvider>
-        </GluestackUIProvider>
-      </AuthProvider>
-    </ErrorProvider>
+          </GluestackUIProvider>
+        </ErrorProvider>
+      </SubstanceProvider>
+    </AuthProvider>
+
+
   );
 }
 
 const Home = () => {
   return (
-  <Container/>
+    <Container />
   );
 };
 

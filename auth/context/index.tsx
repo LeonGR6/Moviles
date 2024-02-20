@@ -4,7 +4,7 @@ import { AuthAction, AuthProviderProps, AuthState } from "../types";
 import { authReducer } from "../reducer";
 
 const initialState: AuthState = {
-    isAuthenticated: true,
+    isAuthenticated: false,
     signIn: () => { },
     signUp: () => { },
     signOut: () => { },

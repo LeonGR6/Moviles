@@ -12,7 +12,7 @@ export default function LoggedUser() {
 
 
   const onHandleSignOut = () => {
-      signOut();
+    signOut();
   }
   return (
     <>
@@ -28,21 +28,21 @@ export default function LoggedUser() {
           alt='desc'
         />
       </Box>
-      
+
       <LinearGradient
-      colors={['rgba(253, 224, 71, 0.05)', 'rgba(253, 224, 71, 0.05)']}
-     
-      style={{
-        borderRadius: 20,
-        backgroundColor: 'white',
-        height: '100%',
-        width: '100%',
-        position: 'absolute',
-        top: '50%',
-        alignItems: 'center',
-      }}
-    >      
-      
+        colors={['rgba(253, 224, 71, 0.05)', 'rgba(253, 224, 71, 0.05)']}
+
+        style={{
+          borderRadius: 20,
+          backgroundColor: 'white',
+          height: '100%',
+          width: '100%',
+          position: 'absolute',
+          top: '50%',
+          alignItems: 'center',
+        }}
+      >
+
         <Image
           mt={20}
           h={110}
@@ -76,7 +76,7 @@ export default function LoggedUser() {
             variant="solid"
             isDisabled={false}
             onPress={onHandleSignOut}
-            >
+          >
             <ButtonText>Logout</ButtonText>
           </Button>
         </VStack>

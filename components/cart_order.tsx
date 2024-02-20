@@ -1,7 +1,11 @@
 import { View, Text, Image, Box, Button } from "@gluestack-ui/themed";
+import useCategory from "../hooks/useCategory";
 
-export default function CartOrder({ product }: { product: any }) {
-    const { id, name, price, quantity, image } = product
+export default function Order({ product }: { product: any }) {
+
+    const { handleDeleteProductCart, handleEditQuantity } = useCategory();
+    
+    const { id, name, price, quantity, image } = product;
 
     return (
         <View display="flex" flexDirection="row" alignItems="center" marginBottom={16} rounded={15} hardShadow="5" bgColor="$yellow200">
@@ -39,7 +43,10 @@ export default function CartOrder({ product }: { product: any }) {
                 </Box>
                 <Box flex={1} flexDirection="row" mt={10}>
 
-                    <Button bgColor="transparent">
+                    <Button
+                        bgColor="transparent"
+                        onPress={()=>handleDeleteProductCart(id)}
+                    >
                         <Image
                             source={require('../assets/Icons/delete.png')}
                             style={{ width: '24px', height: '24px' }}
@@ -48,7 +55,11 @@ export default function CartOrder({ product }: { product: any }) {
 
                         />
                     </Button>
-                    <Button bgColor="transparent" ml={40}>
+                    <Button
+                        bgColor="transparent"
+                        ml={40}
+                        onPress={()=>handleEditQuantity(id)}
+                    >
                         <Image
                             source={require('../assets/Icons/edit.png')}
                             style={{ width: '24px', height: '24px' }}

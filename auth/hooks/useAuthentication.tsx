@@ -23,7 +23,7 @@ export const useAuthentication = () => {
 
             dispatch({
                 type: AuthActionTypes.SIGN_IN,
-                payload: { accessToken ,user }
+                payload: { accessToken , user }
             })
         } catch (error: any) {
             setErrors(Object.values(error.response.data.errors))
@@ -42,7 +42,6 @@ export const useAuthentication = () => {
 
         if (user?.accessToken) {
             const accessToken = user.accessToken;
-            console.log(accessToken);
             const response = await clientAxios.post('/api/logout', {}, {
                 headers: {
                     Authorization: 'Bearer ' + accessToken
@@ -76,7 +75,7 @@ export const useAuthentication = () => {
 
             dispatch({
                 type: AuthActionTypes.SIGN_UP,
-                payload: { accessToken,user }
+                payload: { accessToken, user }
             })
         } catch (error: any) {
             setErrors(Object.values(error.response.data.errors))

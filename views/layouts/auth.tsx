@@ -5,7 +5,7 @@ const Auth_layout = () => {
         <>
             <Box
                 w='100%'
-                h={270}
+                h='40%'
             >
                 <Image
                     h='100%'
@@ -15,12 +15,14 @@ const Auth_layout = () => {
 
                 />
             </Box>
+            <Box>
             <Heading $dark-color="$textLight200" size='2xl' mt={22} style={{ textAlign: 'center' }}>
                 SubstanceTwins
             </Heading>
             <Text $dark-color="$textLight200" size='xl' mt={22} style={{ textAlign: 'center' }}>
                 Your body must be prepared for any situation, which is why you need supplements.
             </Text>
+            </Box>
         </>
     )
 }

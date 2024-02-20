@@ -7,11 +7,12 @@ import useCategory from '../hooks/useCategory';
 import Product_modal from '../components/product_modal';
 import { LinearGradient } from 'expo-linear-gradient';
 import Cart from '../components/cart';
+import { Modal } from '@gluestack-ui/themed';
 
 
 
 export default function Index() {
-  const { actualCategory, modal } = useCategory();
+  const { actualCategory, modal, handleClickModal } = useCategory();
 
   const fetcher = () => clientAxios('/api/products').then(response => response.data);
   const { data, error, isLoading } = useSWR('/api/products', fetcher);
@@ -19,21 +20,24 @@ export default function Index() {
 
 
   return (
-    <LinearGradient
-      colors={['rgba(255, 255, 255,1)', 'rgba(255, 255, 255, 1)']}
-      style={styles.container}
-    >
-      <ScrollView>
-        <View style={styles.rowContainer}>
-          {products.map((product: { id: React.Key | null | undefined; }) => (
-            <ProductCard key={product.id} product={product} />
-          ))}
-        </View>
-      </ScrollView>
-      <Cart/>
-      <Product_modal />
-    </LinearGradient>
-
+    <>
+      <LinearGradient
+        colors={['rgba(255, 255, 255,1)', 'rgba(255, 255, 255, 1)']}
+        style={styles.container}
+      >
+        <ScrollView>
+          <View style={styles.rowContainer}>
+            {products.map((product: { id: React.Key | null | undefined; }) => (
+              <ProductCard key={product.id} product={product} />
+            ))}
+          </View>
+        </ScrollView>
+        <Cart />
+        {modal && (
+            <Product_modal />
+        )}
+      </LinearGradient>
+    </>
   );
 }
 
@@ -42,14 +46,21 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     paddingHorizontal: 20,
+    
 
 
   },
   rowContainer: {
-    flexDirection: 'row',
-    flexWrap: 'wrap',
-    justifyContent: 'space-between',
+    flexDirection:'column',
     marginTop: '20px'
+  },
+  modal: {
+    top: "50%",
+    left: "50%",
+    right: "auto",
+    bottom: "auto",
+    marginRight: "-50%",
+    transform: "translate(-50%, -50%)",
   },
 });
 

@@ -9,17 +9,18 @@ function ProductCard({ product }: { product: any }) {
   
   return (
     <Box
-      width={180}
       m="$1"
       mb={20}
       rounded="$lg"
       hardShadow="5"
       bgColor='rgba(255, 255, 153, 0.40)'
       p={15}
+      display="flex" flexDirection="row" alignItems="center"
     >
       <Box
-        maxWidth={400}
+        maxWidth={'40%'}
         h={150}
+        flex={1}
       >
         <Image
           mb="$1"
@@ -31,7 +32,7 @@ function ProductCard({ product }: { product: any }) {
         />
       </Box>
 
-      <VStack mb="$1">
+      <VStack mb="$1" marginLeft={30}>
         <Heading size="md" fontFamily="$heading" mb="$1">
           {name}
         </Heading>

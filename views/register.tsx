@@ -43,8 +43,7 @@ const Register = ({ navigation }: { navigation: any }) => {
             >
                 <FormControl
                     p="$4"
-                    borderRadius="$lg"
-                >
+                    >
                     <VStack
                         display='flex'
                         alignItems='center'
