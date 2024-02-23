@@ -7,15 +7,14 @@ import useCategory from '../hooks/useCategory';
 import Product_modal from '../components/product_modal';
 import { LinearGradient } from 'expo-linear-gradient';
 import Cart from '../components/cart';
-import { Modal } from '@gluestack-ui/themed';
 
 
 
 export default function Index() {
-  const { actualCategory, modal, handleClickModal } = useCategory();
+  const { actualCategory, modal } = useCategory();
 
   const fetcher = () => clientAxios('/api/products').then(response => response.data);
-  const { data, error, isLoading } = useSWR('/api/products', fetcher);
+  const { data, isLoading } = useSWR('/api/products', fetcher);
   const products = isLoading ? [] : data.data.filter((products: { categories_id: any; }) => products.categories_id === actualCategory.id);
 
 

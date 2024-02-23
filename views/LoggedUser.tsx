@@ -8,12 +8,13 @@ import { useAuth } from '../auth/context';
 export default function LoggedUser() {
 
   const { signOut } = useAuthentication();
-  const { user } = useAuth();
-
+  const { user} = useAuth();
+  
 
   const onHandleSignOut = () => {
     signOut();
   }
+  
   return (
     <>
       <Box
@@ -55,7 +56,7 @@ export default function LoggedUser() {
           alignItems='center'
         >
           <Text $dark-color="$textLight200" size='lg' mt={22} style={{ textAlign: 'center' }}>
-            Hi again {user?.user}
+            Hi again {user?.nameuser}
           </Text>
           <Button
             mt={50}

@@ -19,11 +19,15 @@ export const useAuthentication = () => {
         try {
             const response = await clientAxios.post('/api/login', { email, password });
             const accessToken = response?.data.accessToken;
-            const user = response?.data.user.name;
+            const user = response?.data.user;
+            const admin = response?.data.user.admin;
+            const nameuser = response?.data.user.name;
+
+
 
             dispatch({
                 type: AuthActionTypes.SIGN_IN,
-                payload: { accessToken , user }
+                payload: { accessToken, user, admin, nameuser }
             })
         } catch (error: any) {
             setErrors(Object.values(error.response.data.errors))
@@ -45,7 +49,7 @@ export const useAuthentication = () => {
             const response = await clientAxios.post('/api/logout', {}, {
                 headers: {
                     Authorization: 'Bearer ' + accessToken
-                  }
+                }
             });
             if (response.status === 200) {
                 console.log('Logout exitoso');
@@ -56,10 +60,10 @@ export const useAuthentication = () => {
                 type: AuthActionTypes.SIGN_OUT,
             })
 
-          } else {
+        } else {
             console.log('El objeto user es null');
-          }        
-       
+        }
+
     }
 
 
@@ -70,12 +74,13 @@ export const useAuthentication = () => {
         try {
             const response = await clientAxios.post('/api/register', { name, email, password, password_confirmation });
             const accessToken = response?.data.accessToken;
-            const user =response?.data.user.name;
-
+            const user = response?.data.user;
+            const admin = response?.data.user.admin;
+            const nameuser = response?.data.user.name;
 
             dispatch({
                 type: AuthActionTypes.SIGN_UP,
-                payload: { accessToken, user }
+                payload: { accessToken, user, admin, nameuser }
             })
         } catch (error: any) {
             setErrors(Object.values(error.response.data.errors))
@@ -91,11 +96,12 @@ export const useAuthentication = () => {
             //const accessToken= await AsyncStorage.getItem('accessToken');
             let accessToken = '';
             let user = '';
-
+            let admin = 0;
+            let nameuser = '';
             if (accessToken) {
                 dispatch({
                     type: AuthActionTypes.RESTORE_TOKEN,
-                    payload: { accessToken,user }
+                    payload: { accessToken, user, admin, nameuser }
                 })
             }
         } catch (error) { }

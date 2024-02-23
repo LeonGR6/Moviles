@@ -3,6 +3,8 @@ import { ReactNode } from "react";
 export type AuthUser = {
     accessToken: string;
     user:string;
+    admin:number;
+    nameuser:string;
 };
 
 export type AuthState = {
@@ -10,6 +12,8 @@ export type AuthState = {
     user: {
         user:string;
         accessToken: string;
+        admin:number;
+        nameuser:string;
     } | null;
     signIn: ({ email, password }: { email: string, password: string }) => void;
     signUp: ({ email, password }: { email: string, password: string }) => void;

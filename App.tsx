@@ -1,12 +1,12 @@
-import { GluestackUIProvider, ImageBackground } from '@gluestack-ui/themed';
+import 'react-native-gesture-handler';
+import { GluestackUIProvider } from '@gluestack-ui/themed';
 import { config } from './config/gluestack-ui.config';
 import { Navigation } from './navigation/navigation';
 import { useFonts } from 'expo-font';
 import { SubstanceProvider } from './context/categoryProvider.js';
 import { ErrorProvider } from './context/errorContext';
 import { AuthProvider } from './auth/context';
-import { View, StyleSheet } from 'react-native';
-import Cart from './components/cart';
+
 
 
 
