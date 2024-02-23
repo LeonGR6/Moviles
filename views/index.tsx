@@ -51,7 +51,7 @@ const styles = StyleSheet.create({
   },
   rowContainer: {
     flexDirection:'column',
-    marginTop: '20px'
+    marginTop: 20,
   },
   modal: {
     top: "50%",
