@@ -1,8 +1,9 @@
-import { Box, Input, InputField, VStack, Text, InputIcon, InputSlot, FormControl, EyeIcon, EyeOffIcon, Button, ButtonText, ButtonIcon, AddIcon, Link, LinkText, Alert, AlertText } from '@gluestack-ui/themed';
+import { Box, Input, InputField, VStack, Text, InputIcon, InputSlot, FormControl, Heading, EyeIcon, EyeOffIcon, Button, ButtonText, ButtonIcon, AddIcon, Link, LinkText, Alert, AlertText } from '@gluestack-ui/themed';
 import Auth_layout from './layouts/auth';
 import { useContext, useState } from 'react';
 import { ErrorContext } from '../context/errorContext';
 import { useAuthentication } from '../auth/hooks/useAuthentication';
+import React from 'react';
 
 
 const Register = ({ navigation }: { navigation: any }) => {
@@ -22,19 +23,17 @@ const Register = ({ navigation }: { navigation: any }) => {
     const { signUp } = useAuthentication();
 
     const onHandleSignUp = () => {
+        clearErrors();
         signUp({ name, email, password, password_confirmation });
     }
 
     const handleNavigate = () => {
-        clearErrors(); 
+        clearErrors();
         navigation.navigate('Login');
-      };
+    };
 
     return (
-        <Box
-            h='100%'
-            w='100%'
-        >
+        <>
 
             <Auth_layout />
 
@@ -43,7 +42,7 @@ const Register = ({ navigation }: { navigation: any }) => {
             >
                 <FormControl
                     p="$4"
-                    >
+                >
                     <VStack
                         display='flex'
                         alignItems='center'
@@ -51,7 +50,13 @@ const Register = ({ navigation }: { navigation: any }) => {
                         space="lg"
                         mt={15}
                     >
-                     {errors ? errors.map(error =><Alert h={10} bgColor="$red300" variant="solid" key={error}><AlertText>{error}</AlertText></Alert>) : null}
+                        <Heading $dark-color="$textLight200" size='2xl' style={{ textAlign: 'center' }}>
+                            SubstanceTwins
+                        </Heading>
+                        <Text $dark-color="$textLight200" size='xl' style={{ textAlign: 'center' }}>
+                            Your body must be prepared for any situation, which is why you need supplements.
+                        </Text>
+                        {errors ? errors.map(error => <Alert h={10} bgColor="$red300" variant="solid" key={error}><AlertText>{error}</AlertText></Alert>) : null}
 
 
                         <Input w={270} variant="rounded" >
@@ -142,27 +147,30 @@ const Register = ({ navigation }: { navigation: any }) => {
                         alignItems='center'
                         justifyContent='center'
                         space="lg"
-                        mt={10}>
-                        <Button
-                            bg="$yellow500"
-                            $active-bg="$yellow600"
-                            w={90}
-                            size="sm"
-                            variant="solid"
-                            isDisabled={false}
-                            onPress={onHandleSignUp}
+                        mt={10}
+                        mb="10%"
                         >
-                            <ButtonText>Register</ButtonText>
-                        </Button>
-                        <Link onPress={handleNavigate}>
-                            <LinkText>Already have an account?</LinkText>
-                        </Link>
-                    </VStack>
+                    <Button
+                        bg="$yellow500"
+                        $active-bg="$yellow600"
+                        w={90}
+                        size="sm"
+                        variant="solid"
+                        isDisabled={false}
+                        onPress={onHandleSignUp}
+                    >
+                        <ButtonText>Register</ButtonText>
+                    </Button>
+                    <Link onPress={handleNavigate}>
+                        <LinkText>Already have an account?</LinkText>
+                    </Link>
+                </VStack>
 
 
-                </FormControl>
-            </Box>
-        </Box>
+            </FormControl>
+        </Box >
+
+        </>
 
     )
 }

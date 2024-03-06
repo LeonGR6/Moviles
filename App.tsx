@@ -6,6 +6,7 @@ import { useFonts } from 'expo-font';
 import { SubstanceProvider } from './context/categoryProvider.js';
 import { ErrorProvider } from './context/errorContext';
 import { AuthProvider } from './auth/context';
+import React from 'react';
 
 
 

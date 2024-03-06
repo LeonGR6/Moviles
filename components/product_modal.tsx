@@ -1,7 +1,8 @@
-import { Box, Button, ButtonText, CloseIcon, Heading, Icon, Modal, ModalBackdrop, ModalBody, ModalCloseButton, ModalContent, ModalFooter, ModalHeader, Image, Text, VStack } from '@gluestack-ui/themed'
+import { Box, Button, ButtonText, CloseIcon, Heading, Icon, Modal, ModalBackdrop, ModalBody, ModalCloseButton, ModalContent, ModalFooter, ModalHeader, Image, Text, VStack, ScrollView } from '@gluestack-ui/themed'
 import React, { useEffect } from 'react'
 import useCategory from '../hooks/useCategory'
 import { useState } from 'react';
+import ExpandableText from './ExpandableText';
 
 export default function Product_modal({ }) {
     const { handleClickModal, product, handleAddOrder, order, modal } = useCategory();
@@ -49,49 +50,54 @@ export default function Product_modal({ }) {
                         />
                     </Box>
                     <VStack>
-                        <Text fontSize='$xl' fontFamily="$body" mt={5}>
+                        <ScrollView>
+                            <ExpandableText
+                                text={product.description}
+                                collapsedLines={1} />
+
+                            {/* <Text fontSize='$xl' fontFamily="$body" mt={5}>
                             {product.description}
-                        </Text>
+                        </Text> */}
 
-                        <Box flex={1} flexDirection='row' justifyContent='space-between'>
-                            <Text fontWeight='$bold' fontSize='$2xl' mt={5} flexDirection='column'>
-                                ${product.price}
-                            </Text>
-                            <Button
-                                bgColor='transparent'
-                                onPress={() => {
-                                    if (quantity <= 1) return
-                                    setQuantity(quantity - 1);
-                                }}>
-                                <Image
-                                    source={require('../assets/Icons/remove.png')}
-                                    style={{ width: '24px', height: '24px' }}
-                                    resizeMode="contain"
-                                    alt='desc'
+                            <Box flex={1} flexDirection='row' justifyContent='space-between'>
+                                <Text fontWeight='$bold' fontSize='$2xl' mt={5} flexDirection='column'>
+                                    ${product.price}
+                                </Text>
+                                <Button
+                                    bgColor='transparent'
+                                    onPress={() => {
+                                        if (quantity <= 1) return
+                                        setQuantity(quantity - 1);
+                                    }}>
+                                    <Image
+                                        source={require('../assets/Icons/remove.png')}
+                                        style={{ width: '24px', height: '24px' }}
+                                        resizeMode="contain"
+                                        alt='desc'
 
-                                />
-                            </Button>
-                            <Text fontWeight='$bold' fontSize='$lg' mt={5} flexDirection='column'>
-                                {quantity}
-                            </Text>
-                            <Button
-                                bgColor='transparent'
-                                onPress={() => {
-                                    if (quantity >= 5) return
-                                    setQuantity(quantity + 1);
-                                }}>
-                                <Image
-                                    source={require('../assets/Icons/add.png')}
-                                    style={{ width: '24px', height: '24px' }}
-                                    resizeMode="contain"
-                                    alt='desc'
+                                    />
+                                </Button>
+                                <Text fontWeight='$bold' fontSize='$lg' mt={5} flexDirection='column'>
+                                    {quantity}
+                                </Text>
+                                <Button
+                                    bgColor='transparent'
+                                    onPress={() => {
+                                        if (quantity >= 5) return
+                                        setQuantity(quantity + 1);
+                                    }}>
+                                    <Image
+                                        source={require('../assets/Icons/add.png')}
+                                        style={{ width: '24px', height: '24px' }}
+                                        resizeMode="contain"
+                                        alt='desc'
 
-                                />
-                            </Button>
+                                    />
+                                </Button>
 
 
-                        </Box>
-
+                            </Box>
+                        </ScrollView>
                     </VStack>
                 </ModalBody>
                 <ModalFooter>

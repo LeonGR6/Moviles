@@ -1,5 +1,5 @@
 import React, { useContext } from 'react';
-import { Box, Input, InputField, VStack,  InputIcon, InputSlot, FormControl, EyeIcon, EyeOffIcon, Button, ButtonText, Link, LinkText, Alert,AlertText } from '@gluestack-ui/themed';
+import { Box, Input, InputField, VStack, InputIcon, InputSlot, FormControl, EyeIcon, Text, Heading, EyeOffIcon, Button, ButtonText, Link, LinkText, Alert, AlertText } from '@gluestack-ui/themed';
 import Auth_layout from './layouts/auth';
 import { useState } from 'react';
 import { ErrorContext } from '../context/errorContext';
@@ -21,23 +21,21 @@ const Login = ({ navigation }: { navigation: any }) => {
     const { signIn } = useAuthentication();
 
     const onHandleSignIn = () => {
+        clearErrors();
         signIn({ email, password });
     }
     const handleNavigate = () => {
-        clearErrors(); 
+        clearErrors();
         navigation.navigate('Register');
-      };
+    };
 
     return (
-        <Box
-            h='100%'
-            w='100%'
-        >
 
+        <>
             <Auth_layout />
 
             <Box
-                mt={40}
+                mt={5}
             >
                 <FormControl
                     p="$4"
@@ -50,7 +48,13 @@ const Login = ({ navigation }: { navigation: any }) => {
                         space="lg"
                         mt={15}
                     >
-                     {errors ? errors.map(error =><Alert h={10} bgColor="$red300" variant="solid" key={error}><AlertText>{error}</AlertText></Alert>) : null}
+                        <Heading $dark-color="$textLight200" size='2xl'  style={{ textAlign: 'center' }}>
+                            SubstanceTwins
+                        </Heading>
+                        <Text $dark-color="$textLight200" size='xl' style={{ textAlign: 'center' }}>
+                            Your body must be prepared for any situation, which is why you need supplements.
+                        </Text>
+                        {errors ? errors.map(error => <Alert h={10} bgColor="$red300" variant="solid" key={error}><AlertText>{error}</AlertText></Alert>) : null}
 
                         <Input w={270} variant="rounded"  >
                             <InputField
@@ -96,7 +100,9 @@ const Login = ({ navigation }: { navigation: any }) => {
                         alignItems='center'
                         justifyContent='center'
                         space="lg"
-                        mt={22}>
+                        mt={22}
+                        mb="10%"
+                        >
                         <Button
                             bg="$yellow500"
                             $active-bg="$yellow600"
@@ -116,8 +122,7 @@ const Login = ({ navigation }: { navigation: any }) => {
 
                 </FormControl>
             </Box>
-        </Box>
-
+        </>
     )
 };
 export default Login;

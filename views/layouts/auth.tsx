@@ -1,29 +1,23 @@
 import { Box, Text, Image, Heading } from '@gluestack-ui/themed';
+import { ImageBackground, StyleSheet } from 'react-native';
+import React from 'react';
 
 const Auth_layout = () => {
     return (
-        <>
-            <Box
-                w='100%'
-                h='40%'
-            >
-                <Image
-                    h='100%'
-                    w='100%'
-                    source={require("/assets/images/auth_image.jpg")}
-                    alt='desc'
+        <ImageBackground
+            source={require("/assets/images/auth_image.jpg")}
+            alt='desc'
+            style={styles.background}
+        >
 
-                />
-            </Box>
-            <Box>
-            <Heading $dark-color="$textLight200" size='2xl' mt={22} style={{ textAlign: 'center' }}>
-                SubstanceTwins
-            </Heading>
-            <Text $dark-color="$textLight200" size='xl' mt={22} style={{ textAlign: 'center' }}>
-                Your body must be prepared for any situation, which is why you need supplements.
-            </Text>
-            </Box>
-        </>
+        </ImageBackground >
     )
 }
+const styles = StyleSheet.create({
+    background: {
+        flex: 1,
+        resizeMode: 'cover', // Opcional: ajusta la imagen al tamaño del componente
+        justifyContent: 'center', // Opcional: alinea el contenido en el centro
+    },
+});
 export default Auth_layout;

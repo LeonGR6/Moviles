@@ -2,7 +2,7 @@ import axios from 'axios';
 
 const clientAxios = axios.create({
     
-    baseURL: 'http://localhost/Multiplataforma_Proyecto/Moviles/SubstanceTwins/public/',
+    baseURL: 'http://localhost:8888/Moviles/SubstanceTwins/public/',
     headers:{
         'Content-Type':'application/json',
         'X-Requested-With':'XMLHttpRequest'

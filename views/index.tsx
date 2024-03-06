@@ -16,7 +16,7 @@ export default function Index() {
   const fetcher = () => clientAxios('/api/products').then(response => response.data);
   const { data, isLoading } = useSWR('/api/products', fetcher);
   const products = isLoading ? [] : data.data.filter((products: { categories_id: any; }) => products.categories_id === actualCategory.id);
-
+  console.log(data);
 
   return (
     <>

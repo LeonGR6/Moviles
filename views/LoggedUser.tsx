@@ -8,13 +8,13 @@ import { useAuth } from '../auth/context';
 export default function LoggedUser() {
 
   const { signOut } = useAuthentication();
-  const { user} = useAuth();
-  
+  const { user } = useAuth();
+
 
   const onHandleSignOut = () => {
     signOut();
   }
-  
+
   return (
     <>
       <Box
@@ -55,9 +55,17 @@ export default function LoggedUser() {
         <VStack
           alignItems='center'
         >
-          <Text $dark-color="$textLight200" size='lg' mt={22} style={{ textAlign: 'center' }}>
-            Hi again {user?.nameuser}
-          </Text>
+          {user?.admin === 1 ? (
+            <Text $dark-color="$textLight200" size="lg" mt={22} style={{ textAlign: 'center' }}>
+              Hi again administrator {user?.nameuser}
+            </Text>
+          ) : (
+            <Text $dark-color="$textLight200" size="lg" mt={22} style={{ textAlign: 'center' }}>
+              Hi again {user?.nameuser}
+            </Text>
+          )}
+
+
           <Button
             mt={50}
             bg="$yellow500"
@@ -82,7 +90,7 @@ export default function LoggedUser() {
           </Button>
         </VStack>
 
-      </LinearGradient>
+      </LinearGradient >
     </>
   )
 }

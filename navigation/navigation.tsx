@@ -9,6 +9,7 @@ import { useAuth } from '../auth/context';
 import { AuthStack } from './auth';
 import useCategory from '../hooks/useCategory';
 import { AdminDrawer } from './adminDrawer';
+import React from 'react';
 
 const Tab = createBottomTabNavigator();
 
