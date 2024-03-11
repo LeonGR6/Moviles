@@ -1,4 +1,3 @@
-import { Box, Text, Image, Heading } from '@gluestack-ui/themed';
 import { ImageBackground, StyleSheet } from 'react-native';
 import React from 'react';
 
@@ -16,8 +15,8 @@ const Auth_layout = () => {
 const styles = StyleSheet.create({
     background: {
         flex: 1,
-        resizeMode: 'cover', // Opcional: ajusta la imagen al tamaño del componente
-        justifyContent: 'center', // Opcional: alinea el contenido en el centro
+        resizeMode: 'cover', 
+        justifyContent: 'center', 
     },
 });
 export default Auth_layout;

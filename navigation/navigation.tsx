@@ -103,7 +103,7 @@ function LoggedTab() {
 }
 
 export const Navigation = () => {
-    const { isAuthenticated, user} = useAuth();
+    const { isAuthenticated, user } = useAuth();
 
     return (
         <NavigationContainer>
@@ -112,6 +112,8 @@ export const Navigation = () => {
             ) : (
                 <AuthStack />
             )}
+
+            {/* {isAuthenticated ? <LoggedTab /> : null} */}
         </NavigationContainer>
     )
 }

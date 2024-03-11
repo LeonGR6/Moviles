@@ -1,13 +1,15 @@
-import { Box, Button, ButtonText, CloseIcon, Heading, Icon, Modal, ModalBackdrop, ModalBody, ModalCloseButton, ModalContent, ModalFooter, ModalHeader, Image, Text, VStack, ScrollView } from '@gluestack-ui/themed'
+import { Box, Button, ButtonText, CloseIcon, Heading, Icon, Modal, ModalBackdrop, ModalBody, ModalCloseButton, ModalContent, ModalFooter, ModalHeader, Image, Text, VStack, ScrollView, SafeAreaView, View } from '@gluestack-ui/themed'
 import React, { useEffect } from 'react'
 import useCategory from '../hooks/useCategory'
 import { useState } from 'react';
 import ExpandableText from './ExpandableText';
+import { FlatList, StyleSheet } from 'react-native';
 
 export default function Product_modal({ }) {
     const { handleClickModal, product, handleAddOrder, order, modal } = useCategory();
     const [quantity, setQuantity] = useState(1);
     const [edit, setEdit] = useState(false);
+
 
     useEffect(() => {
         if (order.some((orderState: { id: any; }) => orderState.id === product.id)) {
@@ -17,6 +19,29 @@ export default function Product_modal({ }) {
             setEdit(true)
         }
     }, [order])
+
+
+    ///////Image Slider/////////
+    const [containerWidth, setContainerWidth] = useState(0);
+    const onContainerLayout = (event: { nativeEvent: { layout: { width: any; }; }; }) => {
+        const { width } = event.nativeEvent.layout;
+        setContainerWidth(width);
+    };
+
+    const [activeIndex, setActiveIndex] = useState(0);
+
+    const OnBoardingItem = ({ item }: { item: any }) => {
+        return (
+            <Image
+                source={{ uri: item.image_path }}
+                style={{ width: containerWidth, height: containerWidth }}
+                resizeMode='cover'
+                alt='desc'
+                key={product.images.id}
+            />
+        )
+    }
+    ///////////////////////////////////
 
     return (
 
@@ -35,20 +60,45 @@ export default function Product_modal({ }) {
                     </ModalCloseButton>
                 </ModalHeader>
                 <ModalBody>
-                    <Box
-                        bg='$light300'
-                        maxWidth='100%'
-                        h={300}
-                    >
-                        <Image
-                            mb="$1"
-                            h="$full"
-                            width="$full"
-                            rounded="$md"
-                            source={product.image}
-                            alt="description of image"
-                        />
-                    </Box>
+                    <SafeAreaView>
+                        <Box
+                            maxWidth='100%'
+                            h='100%'
+                            onLayout={onContainerLayout}
+                        >
+
+                            <FlatList
+                                data={product.images}
+                                style={{ maxHeight: containerWidth }}
+                                pagingEnabled
+                                horizontal
+                                initialScrollIndex={activeIndex}
+                                onScroll={(event) => {
+                                    const newIndex = Math.round(event.nativeEvent.contentOffset.x / containerWidth);
+                                    setActiveIndex(newIndex);
+                                }}
+                                showsHorizontalScrollIndicator={false}
+                                keyExtractor={(item) => item.id.toString()}
+                                renderItem={({ item }) => <OnBoardingItem item={item} key={item.id} />}
+                            />
+
+                            {product.images.length > 1 ?
+                                <View
+                                    flexDirection='row'
+                                    justifyContent='center'
+                                    mt={10}
+                                >
+                                    {product.images.map((_: any, i: number) => (
+                                        <View
+                                            key={i}
+                                            style={[styles.dot, { backgroundColor: i === activeIndex ? 'blue' : 'grey' }]}
+                                        />
+                                    ))}
+                                </View>
+                                : null
+                            }
+                        </Box>
+                    </SafeAreaView>
                     <VStack>
                         <ScrollView>
                             <ExpandableText
@@ -131,3 +181,11 @@ export default function Product_modal({ }) {
         </Modal>
     )
 }
+const styles = StyleSheet.create({
+    dot: {
+        width: 8,
+        height: 8,
+        borderRadius: 4,
+        marginHorizontal: 1,
+    }
+})

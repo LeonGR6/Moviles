@@ -5,8 +5,8 @@ import useCategory from '../hooks/useCategory';
 
 function ProductCard({ product }: { product: any }) {
   const { name, image, price } = product
-  const {handleClickModal, handleSetProduct} = useCategory();
-  
+  const { handleClickModal, handleSetProduct } = useCategory();
+
   return (
     <Box
       m="$1"
@@ -27,7 +27,7 @@ function ProductCard({ product }: { product: any }) {
           h="$full"
           width="$full"
           rounded="$md"
-          source={image}
+          source={{ uri: product.images[0].image_path }}
           alt="description of image"
         />
       </Box>
@@ -36,7 +36,7 @@ function ProductCard({ product }: { product: any }) {
         <Heading size="md" fontFamily="$heading" mb="$1">
           {name}
         </Heading>
-        <Text size='lg'  fontFamily="$body" >
+        <Text size='lg' fontFamily="$body" >
           ${price}
         </Text>
         <Button
@@ -45,11 +45,11 @@ function ProductCard({ product }: { product: any }) {
           $active-bg="$yellow600"
           size="sm"
           variant="solid"
-          onPress={()=>{handleClickModal(); handleSetProduct(product);}}
-          >
+          onPress={() => { handleClickModal(); handleSetProduct(product); }}
+        >
           <ButtonText size="sm">Add to cart</ButtonText>
         </Button>
-        
+
       </VStack >
 
     </Box>
