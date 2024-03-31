@@ -7,9 +7,8 @@ const Auth_layout = () => {
             source={require("/assets/images/auth_image.jpg")}
             alt='desc'
             style={styles.background}
-        >
+        />
 
-        </ImageBackground >
     )
 }
 const styles = StyleSheet.create({

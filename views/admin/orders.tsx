@@ -23,7 +23,7 @@ export default function Orders() {
   return (
     <>
       <ScrollView>
-        {orders.map((order: { id: React.Key | null | undefined; }) => (
+        {orders?.map((order: { id: React.Key | null | undefined; }) => (
           <ListOrders key={order.id} order={order} />
         ))}
       </ScrollView>

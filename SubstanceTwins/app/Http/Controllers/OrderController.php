@@ -16,7 +16,7 @@ class OrderController extends Controller
      */
     public function index()
     {
-        return new OrderCollection(Order::with('user')->with('products')->where('status',0)->get());
+        return new OrderCollection(Order::with('user')->with('products')->get());
     }
 
     /**
@@ -33,7 +33,7 @@ class OrderController extends Controller
         $id = $order->id;
         $products = $request->products;
 
-        $order_product = [];
+        $order_product = [];    
         foreach ($products as $product) {
             $order_product[] = [
                 'order_id' => $id,
@@ -65,7 +65,12 @@ class OrderController extends Controller
      */
     public function update(Request $request, Order $order)
     {
-        //
+        $order->update([
+            'order_statuses_id' => $request->order_statuses_id,
+        ]);
+        
+        $order->save();
+
     }
 
     /**
@@ -73,6 +78,10 @@ class OrderController extends Controller
      */
     public function destroy(Order $order)
     {
-        //
+        $order->delete();
+
+        if (!$order) {
+            return response()->json(['error' => 'Order not found'], 404);
+        }
     }
 }

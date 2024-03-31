@@ -1,4 +1,4 @@
-import { createContext, ReactNode, useState } from 'react';
+import React, { createContext, useState } from 'react';
 
 interface ErrorContextType {
   errors: string[];
@@ -13,7 +13,7 @@ export const ErrorContext = createContext<ErrorContextType>({
 });
 
 interface Props {
-  children: ReactNode;
+  children: React.ReactNode; 
 }
 
 export const ErrorProvider = ({ children }: Props) => {

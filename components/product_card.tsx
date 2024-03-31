@@ -4,8 +4,8 @@ import useCategory from '../hooks/useCategory';
 
 
 function ProductCard({ product }: { product: any }) {
-  const { name, image, price } = product
-  const { handleClickModal, handleSetProduct } = useCategory();
+  const { name, price } = product
+  const { handleClickModal, handleSetProduct,  } = useCategory();
 
   return (
     <Box

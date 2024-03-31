@@ -2,20 +2,18 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\User;
+use App\Http\Resources\OrderStatusCollection;
+use App\Models\OrderStatus;
 use Illuminate\Http\Request;
 
-class UserController extends Controller
+class OrderStatusController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        $users = User::all();
-
-        return($users);
-
+        return new OrderStatusCollection(OrderStatus::all());
     }
 
     /**
@@ -61,9 +59,8 @@ class UserController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(User $user)
+    public function destroy(string $id)
     {
-        $user->delete();
-
+        //
     }
 }

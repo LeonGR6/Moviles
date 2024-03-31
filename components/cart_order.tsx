@@ -6,7 +6,7 @@ export default function Order({ product }: { product: any }) {
 
     const { handleDeleteProductCart, handleEditQuantity } = useCategory();
     
-    const { id, name, price, quantity, image } = product;
+    const { id, name, price, quantity } = product;
 
     return (
         <View display="flex" flexDirection="row" alignItems="center" marginBottom={16} rounded={15} hardShadow="5" bgColor="$yellow200">
@@ -21,7 +21,7 @@ export default function Order({ product }: { product: any }) {
                     h="$full"
                     width="$full"
                     rounded="$md"
-                    source={image}
+                    source={product.images[0].image_path}
                     alt="description of image"
                 />
             </Box>

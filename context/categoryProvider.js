@@ -12,8 +12,14 @@ const SubstanceProvider = ({ children }) => {
     const [actualCategory, setActualCategory] = useState({});
     const [product, setProduct] = useState({});
     const [modal, setModal] = useState(false);
+    const [modalAdmin, setModaladmin] = useState(false)
     const [order, setOrder] = useState([]);
     const [total, setTotal] = useState(0);
+    const [images, setImages] = useState({});
+    const [showAlertDialog, setShowAlertDialog] = useState(false)
+
+
+
     const { user } = useAuth();
 
 
@@ -30,8 +36,7 @@ const SubstanceProvider = ({ children }) => {
         try {
             const { data } = await clientAxios('/api/categories')
             setCategories(data.data)
-            setActualCategory(data.data[0])
-
+            setActualCategory({})
 
         } catch (error) {
             console.log(error)
@@ -40,8 +45,10 @@ const SubstanceProvider = ({ children }) => {
 
 
     useEffect(() => {
-        getCategories();
-    }, [])
+        if (user?.accessToken) {
+            getCategories(user?.accessToken);
+        }
+    }, [user?.accessToken])
 
 
 
@@ -50,6 +57,14 @@ const SubstanceProvider = ({ children }) => {
     const handleClickModal = () => {
         setModal(!modal)
     }
+
+
+    //function to open/close the product modal in ADMIN
+    const handleClickAdmin = () => {
+        setModaladmin(!modalAdmin)
+        setImages({})
+    }
+
 
     //Function to filter product to the modal
     const handleSetProduct = product => {
@@ -69,9 +84,13 @@ const SubstanceProvider = ({ children }) => {
 
     //function to change category in the bottom nav
     const handleClickCategory = id => {
-        const category = categories.filter(category => category.id === id)[0]
-        setActualCategory(category)
+        try {
+            const category = categories.filter(category => category.id === id)[0]
+            setActualCategory(category)
 
+        } catch (error) {
+            console.log(error)
+        }
     }
 
     const handleEditQuantity = id => {
@@ -90,8 +109,8 @@ const SubstanceProvider = ({ children }) => {
                 await clientAxios.post('/api/orders',
                     {
                         total,
-                        products: order.map(product=>{
-                            return{
+                        products: order.map(product => {
+                            return {
                                 id: product.id,
                                 quantity: product.quantity
                             }
@@ -102,7 +121,7 @@ const SubstanceProvider = ({ children }) => {
                             Authorization: 'Bearer ' + accessToken
                         }
                     })
-                    setOrder([])
+                setOrder([])
             } catch (error) {
                 console.log(error)
             }
@@ -111,13 +130,98 @@ const SubstanceProvider = ({ children }) => {
         }
 
     }
+    const updateProduct = async () => {
+        if (user?.accessToken) {
+            const accessToken = user.accessToken;
+            try {
+                const productData = {
+                    name: nameEdit,
+                    description: descriptionEdit,
+                    price: priceEdit,
+                };
+
+                if (images !== null && images.length > 0) {
+                    const imagesBase64 = images.map(image => ({
+                        name: image.name,
+                        type: image.type,
+                        uri: image.uri.split(',')[1]
+                    }));
+
+                    productData.images = imagesBase64;
+                }
+
+                await clientAxios.put(
+                    `/api/product/${product.id}`,
+                    productData,
+                    {
+                        headers: {
+                            Authorization: 'Bearer ' + accessToken,
+                            'Content-Type': 'application/json',
+                        }
+                    }
+                );
+
+
+                handleClickAdmin();
+                setImages({})
+            } catch (error) {
+                console.log(error);
+            }
+        } else {
+            console.log('El objeto user es null');
+        }
+    };
+
 
 
     const clearCategory = () => {
         setActualCategory([]);
     };
 
+    ///////////////EDIT PRODUCT ON ADMIN///////////////////
+    const [nameEdit, setNameEdit] = useState('');
+    const [descriptionEdit, setDescriptionEdit] = useState('');
+    const [priceEdit, setPriceEdit] = useState('');
 
+    const getProduct = async (idP) => {
+        const accessToken = user?.accessToken;
+
+        const { data } = await clientAxios(`/api/products/${idP}`, {
+            headers: {
+                Authorization: 'Bearer ' + accessToken
+            }
+        })
+        console.log(data.product)
+        const { name, description, price } = data.product
+        setNameEdit(name);
+        setPriceEdit(price);
+        setDescriptionEdit(description);
+    }
+
+    ///////////////////////////////////////////////////
+
+    /////////////FUNCTION TO DELETE PRODUCT ON TE BACKEND/////////////////////
+    const deleteProduct = async (idP) => {
+        const accessToken = user?.accessToken;
+
+        if (accessToken) {
+            try {
+                await clientAxios.delete(
+                    `/api/product/${idP}`,
+                    {
+                        headers: {
+                            Authorization: 'Bearer ' + accessToken,
+                            'Content-Type': 'application/json',
+                        }
+                    }
+                );
+            } catch (error) {
+                // Si hay un error al eliminar el producto, puedes manejarlo aquí
+                console.error('Error deleting product:', error);
+            }
+        }
+    };
+    //////////////////////////////////////////////////////
 
     return (
         <SubstanceContext.Provider
@@ -137,6 +241,22 @@ const SubstanceProvider = ({ children }) => {
                 handleDeleteProductCart,
                 total,
                 SubmitNewOrder,
+                handleClickAdmin,
+                modalAdmin,
+                setImages,
+                images,
+                updateProduct,
+                nameEdit,
+                setNameEdit,
+                descriptionEdit,
+                setDescriptionEdit,
+                priceEdit,
+                setPriceEdit,
+                getProduct,
+                deleteProduct,
+                setShowAlertDialog,
+                showAlertDialog
+
             }}
 
 
