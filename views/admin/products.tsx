@@ -7,7 +7,8 @@ import useSWR from 'swr'
 import ProductCardAdmin from './components/ProductCardAdmin';
 import useCategory from '../../hooks/useCategory';
 import Product_modalAdmin from './components/ProductModalAdmin';
-import Alert from './components/Alert';
+import AlertDelete from './components/AlertDelete';
+import AlertEdit from './components/AlertEdit';
 
 
 
@@ -16,7 +17,7 @@ export default function Products() {
   const fetcher = () => clientAxios('/api/products').then(datos => datos.data);
   const { data, isLoading } = useSWR('/api/products', fetcher, { refreshInterval: 1000 });
 
-  const { categories, actualCategory, handleClickCategory, clearCategory, modalAdmin } = useCategory();
+  const { categories, actualCategory, handleClickCategory, clearCategory, modalAdmin, handleClickAdmin, handleSetProduct } = useCategory();
 
   const handleCategoryChange = (value: string) => {
     const selectedCategoryId = categories?.find((category: { name: string }) => category.name === value)?.id;
@@ -27,8 +28,6 @@ export default function Products() {
     }
   };
 
-
-  console.log('Actual Category:', actualCategory);
 
 
   const products = isLoading ? [] :
@@ -68,7 +67,7 @@ export default function Products() {
 
         </View>
         <View mb={10}>
-          <Button size="sm" variant="solid" action="positive" isDisabled={false} isFocusVisible={false} >
+          <Button size="sm" variant="solid" action="positive" isDisabled={false} isFocusVisible={false} onPress={() => { handleClickAdmin(); handleSetProduct(null); }} >
             <ButtonText>Add </ButtonText>
             <ButtonIcon as={AddIcon} />
           </Button>
@@ -84,7 +83,9 @@ export default function Products() {
           <Product_modalAdmin />
         )}
       </View>
-      <Alert />
+
+      <AlertDelete />
+      <AlertEdit />
     </>
 
   )

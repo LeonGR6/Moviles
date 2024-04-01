@@ -1,11 +1,10 @@
 import { Text, Image, Button, Box, ButtonText, VStack, Heading } from '@gluestack-ui/themed';
 import React, { useState } from 'react';
 import useCategory from '../../../hooks/useCategory';
-import Alert from './Alert';
 
 function ProductCardAdmin({ product }: { product: any }) {
     const { id, name } = product
-    const { handleSetProduct, handleClickAdmin, getProduct, deleteProduct, setShowAlertDialog } = useCategory();
+    const { handleSetProduct, handleClickAdmin, getProduct, setShowAlertDelete } = useCategory();
 
 
     return (
@@ -26,7 +25,7 @@ function ProductCardAdmin({ product }: { product: any }) {
                     <Image
                         mb="$1"
                         h="$full"
-                        width="$full"
+                        w="$full"
                         rounded="$md"
                         source={{ uri: product.images[0].image_path }}
                         alt="description of image"
@@ -52,7 +51,7 @@ function ProductCardAdmin({ product }: { product: any }) {
                         action="negative"
                         size="sm"
                         variant="solid"
-                        onPress={() => { setShowAlertDialog(true) }}
+                        onPress={() => { setShowAlertDelete(true); handleSetProduct(product); }}
 
                     >
                         <ButtonText size="sm">Delete</ButtonText>

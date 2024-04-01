@@ -16,7 +16,8 @@ const SubstanceProvider = ({ children }) => {
     const [order, setOrder] = useState([]);
     const [total, setTotal] = useState(0);
     const [images, setImages] = useState({});
-    const [showAlertDialog, setShowAlertDialog] = useState(false)
+    const [showAlertDelete, setShowAlertDelete] = useState(false)
+    const [showAlertEdit, setShowAlertEdit] = useState(false)
 
 
 
@@ -59,9 +60,16 @@ const SubstanceProvider = ({ children }) => {
     }
 
 
-    //function to open/close the product modal in ADMIN
+    //function to open/close the product modal an clear inputs in ADMIN
     const handleClickAdmin = () => {
         setModaladmin(!modalAdmin)
+        clearInputs();
+    }
+    const clearInputs = () => {
+        setNameEdit(null);
+        setDescriptionEdit(null);
+        setCategoryEdit(null);
+        setPriceEdit(null);
         setImages({})
     }
 
@@ -130,6 +138,76 @@ const SubstanceProvider = ({ children }) => {
         }
 
     }
+
+
+
+
+
+    const clearCategory = () => {
+        setActualCategory([]);
+    };
+
+
+    /////////////FUNCTION TO INSERT PRODUCT ON TE BACKEND/////////////////////
+    const insertProduct = async () => {
+        const accessToken = user?.accessToken;
+
+        if (accessToken) {
+            try {
+                const productData = {
+                    name: nameEdit,
+                    description: descriptionEdit,
+                    price: priceEdit,
+                    categories_id: categoryEdit,
+                };
+
+                if (images !== null && images.length > 0) {
+                    const imagesBase64 = images.map(image => ({
+                        name: image.name,
+                        type: image.type,
+                        uri: image.uri.split(',')[1]
+                    }));
+
+                    productData.images = imagesBase64;
+                }
+
+                await clientAxios.post(
+                    `/api/product`,
+                    productData,
+                    {
+                        headers: {
+                            Authorization: 'Bearer ' + accessToken,
+                            'Content-Type': 'application/json',
+                        }
+                    }
+                );
+
+
+                handleClickAdmin();
+            } catch (error) {
+                console.log(error);
+            }
+        }
+    };
+    ///////////////////////////////////////////////////
+
+
+    ///////////////EDIT PRODUCT ON ADMIN///////////////////
+    const [nameEdit, setNameEdit] = useState('');
+    const [descriptionEdit, setDescriptionEdit] = useState('');
+    const [priceEdit, setPriceEdit] = useState('');
+    const [categoryEdit, setCategoryEdit] = useState('');
+
+
+    const getProduct = async (idP) => {
+        const { data } = await clientAxios(`/api/products/${idP}`)
+        console.log(data.product)
+        const { name, description, price, categories_id } = data.product
+        setNameEdit(name);
+        setPriceEdit(price);
+        setDescriptionEdit(description);
+        setCategoryEdit(categories_id);
+    }
     const updateProduct = async () => {
         if (user?.accessToken) {
             const accessToken = user.accessToken;
@@ -138,6 +216,7 @@ const SubstanceProvider = ({ children }) => {
                     name: nameEdit,
                     description: descriptionEdit,
                     price: priceEdit,
+                    categories_id: categoryEdit,
                 };
 
                 if (images !== null && images.length > 0) {
@@ -163,7 +242,6 @@ const SubstanceProvider = ({ children }) => {
 
 
                 handleClickAdmin();
-                setImages({})
             } catch (error) {
                 console.log(error);
             }
@@ -171,33 +249,6 @@ const SubstanceProvider = ({ children }) => {
             console.log('El objeto user es null');
         }
     };
-
-
-
-    const clearCategory = () => {
-        setActualCategory([]);
-    };
-
-    ///////////////EDIT PRODUCT ON ADMIN///////////////////
-    const [nameEdit, setNameEdit] = useState('');
-    const [descriptionEdit, setDescriptionEdit] = useState('');
-    const [priceEdit, setPriceEdit] = useState('');
-
-    const getProduct = async (idP) => {
-        const accessToken = user?.accessToken;
-
-        const { data } = await clientAxios(`/api/products/${idP}`, {
-            headers: {
-                Authorization: 'Bearer ' + accessToken
-            }
-        })
-        console.log(data.product)
-        const { name, description, price } = data.product
-        setNameEdit(name);
-        setPriceEdit(price);
-        setDescriptionEdit(description);
-    }
-
     ///////////////////////////////////////////////////
 
     /////////////FUNCTION TO DELETE PRODUCT ON TE BACKEND/////////////////////
@@ -222,6 +273,10 @@ const SubstanceProvider = ({ children }) => {
         }
     };
     //////////////////////////////////////////////////////
+
+  
+
+
 
     return (
         <SubstanceContext.Provider
@@ -252,10 +307,16 @@ const SubstanceProvider = ({ children }) => {
                 setDescriptionEdit,
                 priceEdit,
                 setPriceEdit,
+                categoryEdit,
+                setCategoryEdit,
                 getProduct,
                 deleteProduct,
-                setShowAlertDialog,
-                showAlertDialog
+                setShowAlertDelete,
+                showAlertDelete,
+                setShowAlertEdit,
+                showAlertEdit,
+                insertProduct,
+                clearInputs
 
             }}
 

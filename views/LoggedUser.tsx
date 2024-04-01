@@ -71,7 +71,6 @@ export default function LoggedUser() {
             bg="$yellow500"
             $active-bg="$yellow600"
             size="sm"
-            w='fit-content'
             variant="solid"
             isDisabled={false}>
             <ButtonText>Edit information</ButtonText>
@@ -81,7 +80,6 @@ export default function LoggedUser() {
             bg="$yellow500"
             $active-bg="$yellow600"
             size="sm"
-            w='fit-content'
             variant="solid"
             isDisabled={false}
             onPress={onHandleSignOut}
