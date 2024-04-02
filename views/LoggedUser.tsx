@@ -25,7 +25,7 @@ export default function LoggedUser() {
         <Image
           h='100%'
           w='100%'
-          source={require("/assets/images/account.jpg")}
+          source={require("/Applications/MAMP/htdocs/Moviles/assets/images/account.jpg")}
           alt='desc'
         />
       </Box>
@@ -48,7 +48,7 @@ export default function LoggedUser() {
           mt={20}
           h={110}
           w={110}
-          source={require('../assets/Icons/account.png')}
+          source={require('/Applications/MAMP/htdocs/Moviles/assets/Icons/account.png')}
           alt='desc'
 
         />

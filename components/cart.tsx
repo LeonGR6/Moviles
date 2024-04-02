@@ -7,7 +7,7 @@ import Order from './cart_order';
 export default function Cart() {
     const [showModal, setShowModal] = useState(false)
     const ref = React.useRef(null)
-    const { order, total, SubmitNewOrder } = useCategory();
+    const { order, total, setShowAlertCart } = useCategory();
     const disableCheckoutBtn = () => order.length === 0;
 
     return (
@@ -15,7 +15,7 @@ export default function Cart() {
             <Button onPress={() => setShowModal(true)} ref={ref} bgColor='$yellow300' borderRadius={360} hardShadow='5'>
                 <Image
                     source={require('../assets/Icons/cart.png')}
-                    style={{ width: '30px', height: '30px' }}
+                    style={{ width: 30, height: 30 }}
                     resizeMode="contain"
                     alt='desc'
 
@@ -73,7 +73,7 @@ export default function Cart() {
                             $active-bg="$yellow600"
                             borderWidth="$0"
                             onPress={() => {
-                                SubmitNewOrder();
+                                setShowAlertCart(true);
                             }}
                             disabled={disableCheckoutBtn()}
                         >

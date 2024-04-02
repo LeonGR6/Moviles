@@ -13,11 +13,13 @@ import AlertEdit from './components/AlertEdit';
 
 
 export default function Products() {
+  const { categories, actualCategory, handleClickCategory, clearCategory, modalAdmin, handleClickAdmin, handleSetProduct } = useCategory();
 
   const fetcher = () => clientAxios('/api/products').then(datos => datos.data);
-  const { data, isLoading } = useSWR('/api/products', fetcher, { refreshInterval: 1000 });
 
-  const { categories, actualCategory, handleClickCategory, clearCategory, modalAdmin, handleClickAdmin, handleSetProduct } = useCategory();
+
+  const { data, error, isLoading } = useSWR('/api/products', fetcher, { refreshInterval: 1000 });
+
 
   const handleCategoryChange = (value: string) => {
     const selectedCategoryId = categories?.find((category: { name: string }) => category.name === value)?.id;
@@ -31,13 +33,7 @@ export default function Products() {
 
 
   const products = isLoading ? [] :
-    actualCategory ? data.data.filter((product: { categories_id: any; }) => product.categories_id === actualCategory.id) : data.data;
-
-
-
-
-
-
+    actualCategory ? data?.data.filter((product: { categories_id: any; }) => product.categories_id === actualCategory.id) : data.data;
 
   return (
     <>
@@ -74,7 +70,7 @@ export default function Products() {
         </View>
         <ScrollView>
           <View style={styles.rowContainer}>
-            {products.map((product: { id: React.Key | null | undefined; }) => (
+            {products?.map((product: { id: React.Key | null | undefined; }) => (
               <ProductCardAdmin key={product.id} product={product} />
             ))}
           </View>

@@ -8,6 +8,7 @@ import Product_modal from '../components/product_modal';
 import { LinearGradient } from 'expo-linear-gradient';
 import Cart from '../components/cart';
 import { useAuth } from '../auth/context';
+import AlertCart from '../components/AlertCart';
 
 
 export default function Index() {
@@ -39,6 +40,7 @@ export default function Index() {
           <Product_modal />
         )}
       </LinearGradient>
+      <AlertCart />
     </>
   );
 }

@@ -18,6 +18,12 @@ const SubstanceProvider = ({ children }) => {
     const [images, setImages] = useState({});
     const [showAlertDelete, setShowAlertDelete] = useState(false)
     const [showAlertEdit, setShowAlertEdit] = useState(false)
+    const [showAlertCart, setShowAlertCart] = useState(false)
+    const [showAlertOrders, setShowAlertOrders] = useState(false)
+    const [orderStates, setOrderStates] = useState([]);
+    const [actualOrderState, setActualOrderState] = useState({});
+    const [orderUpdate, setOrderUpdate] = useState([]);
+
 
 
 
@@ -32,29 +38,37 @@ const SubstanceProvider = ({ children }) => {
 
 
 
-    //call to the api to get the categories
+    /////////call to the api to get the categories///////////////////////
     const getCategories = async () => {
         try {
             const { data } = await clientAxios('/api/categories')
             setCategories(data.data)
-            setActualCategory({})
+            setActualCategory(null)
 
         } catch (error) {
             console.log(error)
         }
     }
 
-
     useEffect(() => {
-        if (user?.accessToken) {
-            getCategories(user?.accessToken);
+        getCategories();
+    }, [])
+
+    const handleClickCategory = id => {
+        try {
+            const category = categories.filter(category => category.id === id)[0]
+            setActualCategory(category)
+
+        } catch (error) {
+            console.log(error)
         }
-    }, [user?.accessToken])
+    }
+    const clearCategory = () => {
+        setActualCategory(null);
+    };
+    //////////////////////////////////////
 
-
-
-
-    //function to open/close the product modal
+    ////////function to open/close the product modal////////
     const handleClickModal = () => {
         setModal(!modal)
     }
@@ -79,7 +93,7 @@ const SubstanceProvider = ({ children }) => {
         setProduct(product)
     }
 
-    //function to add to the cart
+    //////function to add to the cart and other cart functions/////////////////
     const handleAddOrder = ({ category_id, description, ...product }) => {
         if (order.some(orderState => orderState.id === product.id)) {
             const orderUpdate = order.map(orderState => orderState.id === product.id ? product : orderState)
@@ -89,18 +103,6 @@ const SubstanceProvider = ({ children }) => {
         }
 
     }
-
-    //function to change category in the bottom nav
-    const handleClickCategory = id => {
-        try {
-            const category = categories.filter(category => category.id === id)[0]
-            setActualCategory(category)
-
-        } catch (error) {
-            console.log(error)
-        }
-    }
-
     const handleEditQuantity = id => {
         const productUpdate = order.filter(product => product.id === id)[0]
         setProduct(productUpdate);
@@ -139,13 +141,11 @@ const SubstanceProvider = ({ children }) => {
 
     }
 
+    ////////////////////////////////////////////////
 
 
 
 
-    const clearCategory = () => {
-        setActualCategory([]);
-    };
 
 
     /////////////FUNCTION TO INSERT PRODUCT ON TE BACKEND/////////////////////
@@ -274,8 +274,97 @@ const SubstanceProvider = ({ children }) => {
     };
     //////////////////////////////////////////////////////
 
-  
+    //call to the api to get the order states
+    const getOrderStates = async () => {
+        try {
+            const { data } = await clientAxios('/api/orderstates')
+            setOrderStates(data.data)
+            setActualOrderState(null)
 
+        } catch (error) {
+            console.log(error)
+        }
+    }
+    useEffect(() => {
+        getOrderStates();
+    }, [])
+
+    const handleClickOrderState = id => {
+        try {
+            const state = orderStates.filter(state => state.id === id)[0]
+            setActualOrderState(state)
+
+        } catch (error) {
+            console.log(error)
+        }
+    }
+
+
+    const clearOrderState = () => {
+        setActualOrderState(null);
+    };
+
+    //////////////////////////////////////////////////
+
+    //////////////////////HANDLE STATUS OF ORDERS///////////////////////////
+    const makeStatusCompleted = id => {
+        const accessToken = user?.accessToken;
+
+        if (accessToken) {
+            try {
+                clientAxios.put(`/api/orders/${id}`,
+                    {
+                        order_statuses_id: 3,
+                    },
+                    {
+                        headers: {
+                            Authorization: 'Bearer ' + accessToken
+                        }
+                    })
+            } catch (error) {
+                console.log(error)
+            }
+        }
+    }
+
+
+    const makeStatusShipped = id => {
+        const accessToken = user?.accessToken;
+        if (accessToken) {
+            try {
+                clientAxios.put(`/api/orders/${id}`,
+                    {
+                        order_statuses_id: 2,
+                    },
+                    {
+                        headers: {
+                            Authorization: 'Bearer ' + accessToken
+                        }
+                    })
+            } catch (error) {
+                console.log(error)
+            }
+        }
+    }
+    const deleteOrder = async (id) => {
+        const accessToken = user?.accessToken;
+        if (accessToken) {
+            try {
+                await clientAxios.delete(
+                    `/api/orders/${id}`,
+                    {
+                        headers: {
+                            Authorization: 'Bearer ' + accessToken,
+                            'Content-Type': 'application/json',
+                        }
+                    }
+                );
+            } catch (error) {
+                console.error('Error deleting order:', error);
+            }
+        }
+    };
+    ////////////////////////////////////////////////////////////
 
 
     return (
@@ -316,7 +405,21 @@ const SubstanceProvider = ({ children }) => {
                 setShowAlertEdit,
                 showAlertEdit,
                 insertProduct,
-                clearInputs
+                clearInputs,
+                orderStates,
+                setOrderStates,
+                handleClickOrderState,
+                clearOrderState,
+                actualOrderState,
+                makeStatusCompleted,
+                makeStatusShipped,
+                deleteOrder,
+                setShowAlertOrders,
+                showAlertOrders,
+                orderUpdate,
+                setOrderUpdate,
+                showAlertCart,
+                setShowAlertCart
 
             }}
 

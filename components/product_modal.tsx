@@ -121,7 +121,7 @@ export default function Product_modal({ }) {
                                     }}>
                                     <Image
                                         source={require('../assets/Icons/remove.png')}
-                                        style={{ width: '24px', height: '24px' }}
+                                        style={{ width: 24, height: 24 }}
                                         resizeMode="contain"
                                         alt='desc'
 
@@ -138,7 +138,7 @@ export default function Product_modal({ }) {
                                     }}>
                                     <Image
                                         source={require('../assets/Icons/add.png')}
-                                        style={{ width: '24px', height: '24px' }}
+                                        style={{ width: 24, height: 24 }}
                                         resizeMode="contain"
                                         alt='desc'
 

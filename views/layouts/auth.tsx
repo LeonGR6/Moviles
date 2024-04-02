@@ -4,7 +4,7 @@ import React from 'react';
 const Auth_layout = () => {
     return (
         <ImageBackground
-            source={require("/assets/images/auth_image.jpg")}
+            source={require("/Applications/MAMP/htdocs/Moviles/assets/images/auth_image.jpg")}
             alt='desc'
             style={styles.background}
         />
