@@ -10,9 +10,10 @@ function ProductCardAdmin({ product }: { product: any }) {
     return (
         <>
             <Box
-                m="$1"
+                m="$4"
                 mb={20}
                 rounded="$lg"
+                backgroundColor='white'
                 hardShadow="5"
                 p={15}
                 display="flex" flexDirection="row" alignItems="center"

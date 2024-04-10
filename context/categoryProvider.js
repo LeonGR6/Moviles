@@ -165,7 +165,7 @@ const SubstanceProvider = ({ children }) => {
                     const imagesBase64 = images.map(image => ({
                         name: image.name,
                         type: image.type,
-                        uri: image.uri.split(',')[1]
+                        uri: image.uri
                     }));
 
                     productData.images = imagesBase64;
@@ -203,11 +203,14 @@ const SubstanceProvider = ({ children }) => {
         const { data } = await clientAxios(`/api/products/${idP}`)
         console.log(data.product)
         const { name, description, price, categories_id } = data.product
+        
         setNameEdit(name);
         setPriceEdit(price);
         setDescriptionEdit(description);
         setCategoryEdit(categories_id);
     }
+
+    
     const updateProduct = async () => {
         if (user?.accessToken) {
             const accessToken = user.accessToken;
@@ -223,7 +226,7 @@ const SubstanceProvider = ({ children }) => {
                     const imagesBase64 = images.map(image => ({
                         name: image.name,
                         type: image.type,
-                        uri: image.uri.split(',')[1]
+                        uri: image.uri
                     }));
 
                     productData.images = imagesBase64;
