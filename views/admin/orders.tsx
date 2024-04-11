@@ -63,13 +63,13 @@ export default function Orders() {
           </Select>
 
         </View>
-        <ScrollView>
-          <View style={styles.rowContainer}>
+        <View style={styles.rowContainer}>
+          <ScrollView>
             {orders?.map((order: { id: React.Key | null | undefined; }) => (
               <ListOrders key={order.id} order={order} />
             ))}
-          </View>
-        </ScrollView>
+          </ScrollView>
+        </View>
       </View>
 
       <AlertOrders />
@@ -87,7 +87,7 @@ const styles = StyleSheet.create({
   },
   rowContainer: {
     flexDirection: 'column',
-    marginTop: 20,
+    marginBottom:120,
   },
   selectContainer: {
     marginTop: 20,

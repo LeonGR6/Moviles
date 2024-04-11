@@ -21,7 +21,7 @@ const ExpandableText: React.FC<ExpandableTextProps> = ({
             <Text
                 fontSize='$xl'
                 fontFamily="$body"
-                mt={5}
+                mt={10}
                 numberOfLines={isExpanded ? undefined : collapsedLines}
                 ellipsizeMode="tail"
             >
@@ -34,6 +34,16 @@ const ExpandableText: React.FC<ExpandableTextProps> = ({
                         fontFamily="$body"
                         mt={5} style={{ color: 'blue' }}>
                         Expand
+                    </Text>
+                </Pressable>
+            )}
+            {isExpanded && (
+                <Pressable onPress={toggleExpanded}>
+                    <Text
+                        fontSize='$xl'
+                        fontFamily="$body"
+                        mt={5} style={{ color: 'blue' }}>
+                        Less
                     </Text>
                 </Pressable>
             )}

@@ -63,7 +63,6 @@ export default function Product_modal({ }) {
                     <SafeAreaView>
                         <Box
                             maxWidth='100%'
-                            h='100%'
                             onLayout={onContainerLayout}
                         >
 
@@ -100,17 +99,12 @@ export default function Product_modal({ }) {
                         </Box>
                     </SafeAreaView>
                     <VStack>
-                        <ScrollView>
                             <ExpandableText
                                 text={product.description}
                                 collapsedLines={1} />
 
-                            {/* <Text fontSize='$xl' fontFamily="$body" mt={5}>
-                            {product.description}
-                        </Text> */}
-
                             <Box flex={1} flexDirection='row' justifyContent='space-between'>
-                                <Text fontWeight='$bold' fontSize='$2xl' mt={5} flexDirection='column'>
+                                <Text fontWeight='$bold' fontSize='$xl' mt={10} flexDirection='column'>
                                     ${product.price}
                                 </Text>
                                 <Button
@@ -127,7 +121,7 @@ export default function Product_modal({ }) {
 
                                     />
                                 </Button>
-                                <Text fontWeight='$bold' fontSize='$lg' mt={5} flexDirection='column'>
+                                <Text fontWeight='$bold' fontSize='$xl' mt={10} flexDirection='column'>
                                     {quantity}
                                 </Text>
                                 <Button
@@ -144,10 +138,7 @@ export default function Product_modal({ }) {
 
                                     />
                                 </Button>
-
-
                             </Box>
-                        </ScrollView>
                     </VStack>
                 </ModalBody>
                 <ModalFooter>

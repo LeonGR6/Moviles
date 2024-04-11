@@ -13,6 +13,7 @@ const SubstanceProvider = ({ children }) => {
     const [product, setProduct] = useState({});
     const [modal, setModal] = useState(false);
     const [modalAdmin, setModaladmin] = useState(false)
+    const [showModalCart, setShowModalCart] = useState(false)
     const [order, setOrder] = useState([]);
     const [total, setTotal] = useState(0);
     const [images, setImages] = useState({});
@@ -68,9 +69,13 @@ const SubstanceProvider = ({ children }) => {
     };
     //////////////////////////////////////
 
-    ////////function to open/close the product modal////////
+    ////////function to open/close the product and cart modal////////
     const handleClickModal = () => {
         setModal(!modal)
+    }
+
+    const handleClickModalCart = () => {
+        setShowModalCart(!showModalCart)
     }
 
 
@@ -422,7 +427,9 @@ const SubstanceProvider = ({ children }) => {
                 orderUpdate,
                 setOrderUpdate,
                 showAlertCart,
-                setShowAlertCart
+                setShowAlertCart,
+                handleClickModalCart,
+                showModalCart
 
             }}
 

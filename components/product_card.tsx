@@ -9,11 +9,11 @@ function ProductCard({ product }: { product: any }) {
 
   return (
     <Box
-      m="$1"
+      m="$2"
       mb={20}
       rounded="$lg"
       hardShadow="5"
-      bgColor='rgba(255, 255, 153, 0.40)'
+      bgColor='$yellow100'
       p={15}
       display="flex" flexDirection="row" alignItems="center"
     >
@@ -25,7 +25,7 @@ function ProductCard({ product }: { product: any }) {
         <Image
           mb="$1"
           h="$full"
-          width="$full"
+          w="$full"
           rounded="$md"
           source={{ uri: product.images[0].image_path }}
           alt="description of image"

@@ -9,10 +9,11 @@ import { LinearGradient } from 'expo-linear-gradient';
 import Cart from '../components/cart';
 import { useAuth } from '../auth/context';
 import AlertCart from '../components/AlertCart';
+import ModalCart from '../components/ModalCart';
 
 
 export default function Index() {
-  const { actualCategory, modal } = useCategory();
+  const { actualCategory, modal, showModalCart } = useCategory();
 
 
   const fetcher = () => clientAxios('/api/products').then(response => response.data);
@@ -38,6 +39,9 @@ export default function Index() {
         <Cart />
         {modal && (
           <Product_modal />
+        )}
+        {showModalCart && (
+          <ModalCart />
         )}
       </LinearGradient>
       <AlertCart />

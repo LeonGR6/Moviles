@@ -11,7 +11,7 @@ export default function ListOrders({ order }: { order: any }) {
     return (
 
         <VStack space="3xl" p={15}>
-            <Box rounded={15} hardShadow="5" mt={10} p={15}>
+            <Box rounded={15} hardShadow="5" mt={10} p={15} bgColor='white'>
                 <Heading>
                     Order: {id}
                 </Heading>

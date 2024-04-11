@@ -69,16 +69,20 @@ export default function Products() {
           </Button>
         </View>
         <ScrollView>
+
           <View style={styles.rowContainer}>
             {products?.map((product: { id: React.Key | null | undefined; }) => (
               <ProductCardAdmin key={product.id} product={product} />
             ))}
+
           </View>
-        </ScrollView>
+        </ScrollView >
+
         {modalAdmin && (
           <Product_modalAdmin />
         )}
       </View>
+
 
       <AlertDelete />
       <AlertEdit />
@@ -92,14 +96,14 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     paddingHorizontal: 20,
-    
+
 
 
 
   },
   rowContainer: {
     flexDirection: 'column',
-    marginTop: 20,
+
   },
   selectContainer: {
     marginTop: 20,
