@@ -9,11 +9,12 @@ import useCategory from '../../hooks/useCategory';
 import Product_modalAdmin from './components/ProductModalAdmin';
 import AlertDelete from './components/AlertDelete';
 import AlertEdit from './components/AlertEdit';
+import Product_modalAdminEmpty from './components/ProductModalAdminEmpty';
 
 
 
 export default function Products() {
-  const { categories, actualCategory, handleClickCategory, clearCategory, modalAdmin, handleClickAdmin, handleSetProduct } = useCategory();
+  const { categories, actualCategory, handleClickCategory, clearCategory, modalAdmin,modalAdminEmpty, handleClickAdminEmpty, handleSetProduct } = useCategory();
 
   const fetcher = () => clientAxios('/api/products').then(datos => datos.data);
 
@@ -63,7 +64,7 @@ export default function Products() {
 
         </View>
         <View mb={10}>
-          <Button size="sm" variant="solid" action="positive" isDisabled={false} isFocusVisible={false} onPress={() => { handleClickAdmin(); handleSetProduct(null); }} >
+          <Button size="sm" variant="solid" action="positive" isDisabled={false} isFocusVisible={false} onPress={() => { handleClickAdminEmpty(); handleSetProduct(null); }} >
             <ButtonText>Add </ButtonText>
             <ButtonIcon as={AddIcon} />
           </Button>
@@ -81,7 +82,11 @@ export default function Products() {
         {modalAdmin && (
           <Product_modalAdmin />
         )}
+          {modalAdminEmpty && (
+          <Product_modalAdminEmpty />
+        )}
       </View>
+      
 
 
       <AlertDelete />

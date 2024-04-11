@@ -1,7 +1,7 @@
-import React, { useState, useEffect, createContext } from 'react'
+import React, { useState, useEffect, createContext, useContext } from 'react'
 import clientAxios from '../config/axios';
 import { useAuth } from "../auth/context";
-
+import { ErrorContext } from './errorContext';
 
 
 const SubstanceContext = createContext();
@@ -13,6 +13,7 @@ const SubstanceProvider = ({ children }) => {
     const [product, setProduct] = useState({});
     const [modal, setModal] = useState(false);
     const [modalAdmin, setModaladmin] = useState(false)
+    const [modalAdminEmpty, setModaladminEmpty] = useState(false)
     const [showModalCart, setShowModalCart] = useState(false)
     const [order, setOrder] = useState([]);
     const [total, setTotal] = useState(0);
@@ -24,6 +25,8 @@ const SubstanceProvider = ({ children }) => {
     const [orderStates, setOrderStates] = useState([]);
     const [actualOrderState, setActualOrderState] = useState({});
     const [orderUpdate, setOrderUpdate] = useState([]);
+    const { errors, setErrors } = useContext(ErrorContext);
+
 
 
 
@@ -82,6 +85,10 @@ const SubstanceProvider = ({ children }) => {
     //function to open/close the product modal an clear inputs in ADMIN
     const handleClickAdmin = () => {
         setModaladmin(!modalAdmin)
+        clearInputs();
+    }
+    const handleClickAdminEmpty = () => {
+        setModaladminEmpty(!modalAdminEmpty)
         clearInputs();
     }
     const clearInputs = () => {
@@ -188,9 +195,10 @@ const SubstanceProvider = ({ children }) => {
                 );
 
 
-                handleClickAdmin();
+                handleClickAdminEmpty();
             } catch (error) {
-                console.log(error);
+                setErrors(Object.values(error.response.data.errors))
+
             }
         }
     };
@@ -208,14 +216,14 @@ const SubstanceProvider = ({ children }) => {
         const { data } = await clientAxios(`/api/products/${idP}`)
         console.log(data.product)
         const { name, description, price, categories_id } = data.product
-        
+
         setNameEdit(name);
         setPriceEdit(price);
         setDescriptionEdit(description);
         setCategoryEdit(categories_id);
     }
 
-    
+
     const updateProduct = async () => {
         if (user?.accessToken) {
             const accessToken = user.accessToken;
@@ -237,7 +245,7 @@ const SubstanceProvider = ({ children }) => {
                     productData.images = imagesBase64;
                 }
 
-                await clientAxios.put(
+              const response =  await clientAxios.put(
                     `/api/product/${product.id}`,
                     productData,
                     {
@@ -248,10 +256,11 @@ const SubstanceProvider = ({ children }) => {
                     }
                 );
 
-
+                    
                 handleClickAdmin();
-            } catch (error) {
-                console.log(error);
+            } catch (e) {
+                setErrors(e.response.data.errors);
+                console.log(e)
             }
         } else {
             console.log('El objeto user es null');
@@ -429,7 +438,9 @@ const SubstanceProvider = ({ children }) => {
                 showAlertCart,
                 setShowAlertCart,
                 handleClickModalCart,
-                showModalCart
+                showModalCart,
+                handleClickAdminEmpty,
+                modalAdminEmpty
 
             }}
 
