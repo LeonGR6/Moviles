@@ -1,12 +1,20 @@
 import 'react-native-gesture-handler';
 import { GluestackUIProvider } from '@gluestack-ui/themed';
 import { config } from './config/gluestack-ui.config';
-import { Navigation } from './navigation/navigation';
+import LoggedTab from './navigation/navigation';
 import { useFonts } from 'expo-font';
 import { SubstanceProvider } from './context/categoryProvider.js';
 import { ErrorProvider } from './context/errorContext';
-import { AuthProvider } from './auth/context';
-import React from 'react';
+import { AuthProvider, useAuth } from './auth/context';
+import { EventRegister } from 'react-native-event-listeners'
+import React, { useState, useEffect } from 'react'
+import theme from './theme/theme';
+import themeContext from './theme/themeContext';
+import { NavigationContainer, DarkTheme, DefaultTheme } from '@react-navigation/native';
+import { AdminDrawer } from './navigation/adminDrawer';
+import { AuthStack } from './navigation/auth';
+import useCategory from './hooks/useCategory';
+
 
 let fontsLoaded = {
   'Montserrat-Bold': require('./assets/fonts/Montserrat-Bold.ttf'),
@@ -16,38 +24,59 @@ let fontsLoaded = {
 };
 
 
+
+
 export default function App() {
 
   const [isLoaded] = useFonts(fontsLoaded);
+  
+  const [isDarkMode, setIsDarkMode] = useState(false);
+
+
+  useEffect(() => {
+    const listener = EventRegister.addEventListener('ChangeTheme', (data) => {
+      setIsDarkMode(data)
+    })
+    return () => {
+      EventRegister.removeAllListeners()
+    }
+  }, [isDarkMode])
+
+  const Container = () => {
+    const { isAuthenticated, user } = useAuth();
+  
+    return (
+      <NavigationContainer theme={isDarkMode === true ? DarkTheme : DefaultTheme}>
+        {isAuthenticated ? (
+          user?.admin === 1 ? <AdminDrawer /> : <LoggedTab />
+  
+        ) : (
+          <AuthStack />
+        )}
+      </NavigationContainer>
+    )
+  };
 
   if (isLoaded) {
     return (
       <AuthProvider>
-        <SubstanceProvider>
-          <ErrorProvider>
-            <GluestackUIProvider config={config} >
-              <Home />
-            </GluestackUIProvider>
-          </ErrorProvider>
-        </SubstanceProvider>
+        <themeContext.Provider value={isDarkMode === true ? theme.dark : theme.light}>
+          <SubstanceProvider>
+            <ErrorProvider>
+              <GluestackUIProvider config={config} >
+                <Container />
+              </GluestackUIProvider>
+            </ErrorProvider>
+          </SubstanceProvider>
+        </themeContext.Provider>
       </AuthProvider>
 
 
     );
-}
-
+  }
  
+
 }
 
-const Home = () => {
-  return (
-    <Container />
-  );
-};
 
 
-const Container = () => {
-  return (
-    <Navigation />
-  );
-};

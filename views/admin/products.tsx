@@ -38,6 +38,7 @@ export default function Products() {
 
   return (
     <>
+    
       <View style={styles.container}>
         <View style={styles.selectContainer}>
           <Text>Select a category:</Text>

@@ -22,6 +22,7 @@ const SubstanceProvider = ({ children }) => {
     const [showAlertEdit, setShowAlertEdit] = useState(false)
     const [showAlertCart, setShowAlertCart] = useState(false)
     const [showAlertOrders, setShowAlertOrders] = useState(false)
+    const [showAlertLogout, setShowAlertLogout] = useState(false)
     const [orderStates, setOrderStates] = useState([]);
     const [actualOrderState, setActualOrderState] = useState({});
     const [orderUpdate, setOrderUpdate] = useState([]);
@@ -384,6 +385,24 @@ const SubstanceProvider = ({ children }) => {
     ////////////////////////////////////////////////////////////
 
 
+    ////////////////////////////////////////////
+    const [nameUser, setUser] = useState('');
+    const [email, setEmail] = useState('');
+   
+    const getUser = async (idP) => {
+        const { data } = await clientAxios(`/api/products/${idP}`)
+        console.log(data.product)
+        const { name, description, price, categories_id } = data.product
+
+        setNameEdit(name);
+        setPriceEdit(price);
+        setDescriptionEdit(description);
+        setCategoryEdit(categories_id);
+    }
+
+
+
+
     return (
         <SubstanceContext.Provider
 
@@ -440,7 +459,14 @@ const SubstanceProvider = ({ children }) => {
                 handleClickModalCart,
                 showModalCart,
                 handleClickAdminEmpty,
-                modalAdminEmpty
+                modalAdminEmpty,
+                nameUser,
+                setUser,
+                email,
+                setEmail,
+                getUser,
+                showAlertLogout,
+                setShowAlertLogout
 
             }}
 

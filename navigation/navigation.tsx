@@ -10,10 +10,11 @@ import { AuthStack } from './auth';
 import useCategory from '../hooks/useCategory';
 import { AdminDrawer } from './adminDrawer';
 import React from 'react';
+import EditUserStack from './editUserStack';
 
 const Tab = createBottomTabNavigator();
 
-function LoggedTab() {
+export default function LoggedTab() {
     const { clearCategory } = useCategory();
 
 
@@ -22,6 +23,7 @@ function LoggedTab() {
             screenOptions={{
                 tabBarActiveTintColor: '#ca8a04',
                 tabBarStyle: { backgroundColor: '#rgba(253, 224, 71, 0.20)' },
+
             }}
         >
 
@@ -95,25 +97,9 @@ function LoggedTab() {
                         />
                     )
                 }}
-                component={LoggedUser}
+                component={EditUserStack}
             />
 
         </Tab.Navigator>
-    )
-}
-
-export const Navigation = () => {
-    const { isAuthenticated, user } = useAuth();
-
-    return (
-        <NavigationContainer>
-            {isAuthenticated ? (
-                user?.admin === 1 ? <AdminDrawer /> : <LoggedTab />
-            ) : (
-                <AuthStack />
-            )}
-
-            {/* {isAuthenticated ? <LoggedTab /> : null} */}
-        </NavigationContainer>
     )
 }

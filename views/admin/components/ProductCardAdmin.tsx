@@ -1,4 +1,4 @@
-import { Text, Image, Button, Box, ButtonText, VStack, Heading } from '@gluestack-ui/themed';
+import { Image, Button, Box, ButtonText, VStack, Heading } from '@gluestack-ui/themed';
 import React, { useState } from 'react';
 import useCategory from '../../../hooks/useCategory';
 
